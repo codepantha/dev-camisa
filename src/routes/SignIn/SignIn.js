@@ -1,5 +1,9 @@
 import React from 'react';
-import { createUserDocumentFromAuth, signInWithGooglePopup } from '../../utils/firebase/firebase.utils';
+import SignUpForm from '../../components/SignUpForm/SignUpForm';
+import {
+  createUserDocumentFromAuth,
+  signInWithGooglePopup,
+} from '../../utils/firebase/firebase.utils';
 /* eslint-disable no-unused-vars */
 
 const SignIn = () => {
@@ -14,6 +18,7 @@ const SignIn = () => {
       <button type="button" onClick={logGoogleUser}>
         Sign in with Google
       </button>
+      <SignUpForm />
     </div>
   );
 };
