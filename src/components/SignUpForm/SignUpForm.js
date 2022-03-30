@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils';
+import Button from '../Button/Button';
 import FormInput from '../FormInput/FormInput';
+import './SignUpForm.styles.scss';
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
 const defaultFormFields = {
@@ -38,7 +40,9 @@ const SignUpForm = () => {
   };
 
   return (
-    <div>
+    <div className="sign-up-container">
+      <h2>Don&apos;t have an account?</h2>
+      <span>Sign up with your email and password</span>
       <form onSubmit={handleSubmit}>
         <FormInput
           label="Display Name"
@@ -76,7 +80,7 @@ const SignUpForm = () => {
           handleChange={handleChange}
         />
 
-        <button type="submit">Sign Up</button>
+        <Button type="submit">Sign Up</Button>
       </form>
     </div>
   );
