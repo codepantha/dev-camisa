@@ -1,26 +1,13 @@
 import React from 'react';
-import SignUpForm from '../../components/SignUpForm/SignUpForm';
-import {
-  createUserDocumentFromAuth,
-  signInWithGooglePopup,
-} from '../../utils/firebase/firebase.utils';
-/* eslint-disable no-unused-vars */
+import { SignUpForm } from '../../components';
+import SignInForm from '../../components/SignInForm/SignInForm';
+import './Authentication.styles.scss';
 
-const Authentication = () => {
-  const logGoogleUser = async () => {
-    const { user } = await signInWithGooglePopup();
-    const userDocRef = createUserDocumentFromAuth(user);
-  };
-
-  return (
-    <div>
-      <h1>Sign In Page</h1>
-      <button type="button" onClick={logGoogleUser}>
-        Sign in with Google
-      </button>
-      <SignUpForm />
-    </div>
-  );
-};
+const Authentication = () => (
+  <div className="authentication-container">
+    <SignInForm />
+    <SignUpForm />
+  </div>
+);
 
 export default Authentication;
