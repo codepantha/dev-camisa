@@ -6,7 +6,7 @@ import {
 } from '../../utils/firebase/firebase.utils';
 /* eslint-disable no-unused-vars */
 
-const SignIn = () => {
+const Authentication = () => {
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup();
     const userDocRef = createUserDocumentFromAuth(user);
@@ -23,4 +23,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default Authentication;
