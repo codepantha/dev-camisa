@@ -3,6 +3,7 @@ import {
   getAuth, signInWithPopup, GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth';
 /* eslint-disable no-unused-vars */
 import {
@@ -67,3 +68,5 @@ export const authenticateUserWithEmailAndPassword = async (email, password) => {
   const user = await signInWithEmailAndPassword(auth, email, password);
   return user;
 };
+
+export const signOutUser = () => signOut(auth);
