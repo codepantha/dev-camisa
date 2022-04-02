@@ -1,6 +1,5 @@
 import React from 'react';
-import { SignUpForm } from '../../components';
-import SignInForm from '../../components/SignInForm/SignInForm';
+import { SignInForm, SignUpForm } from '../../components';
 import './Authentication.styles.scss';
 
 const Authentication = () => (
