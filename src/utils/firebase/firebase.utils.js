@@ -1,8 +1,11 @@
 import { initializeApp } from 'firebase/app';
 import {
-  getAuth, signInWithPopup, GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
   signOut,
 } from 'firebase/auth';
 /* eslint-disable no-unused-vars */
@@ -68,5 +71,7 @@ export const authenticateUserWithEmailAndPassword = async (email, password) => {
   const user = await signInWithEmailAndPassword(auth, email, password);
   return user;
 };
+
+export const onAuthStateChangedListener = (cb) => onAuthStateChanged(auth, cb);
 
 export const signOutUser = () => signOut(auth);
