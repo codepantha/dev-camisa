@@ -10,7 +10,6 @@ const ProductCard = ({ product }) => {
 
   const addToCartHandler = () => {
     addItemToCart(product);
-    console.log('added');
   };
 
   return (
