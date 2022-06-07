@@ -14,6 +14,14 @@ const addCartItem = (cartItems, product) => {
   return [...cartItems, { ...product, quantity: 1 }];
 };
 
+const reduceCartItemQuantity = (cartItems, product) => cartItems.map((cartItem) => {
+  if (cartItem.name === product.name) {
+    /* eslint-disable no-param-reassign */
+    if (cartItem.quantity > 0) cartItem.quantity -= 1;
+  }
+  return cartItem;
+});
+
 export const CartContext = createContext({
   isCartOpen: false,
   cartItems: [],
@@ -35,12 +43,17 @@ export const CartProvider = ({ children }) => {
     setCartItems(addCartItem(cartItems, product));
   };
 
+  const decrementQuantity = (product) => {
+    setCartItems(reduceCartItemQuantity(cartItems, product));
+  };
+
   const value = {
     isCartOpen,
     setIsCartOpen,
     cartItems,
     addItemToCart,
     cartCount,
+    decrementQuantity,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
