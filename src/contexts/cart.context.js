@@ -40,6 +40,7 @@ export const CartProvider = ({ children }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
+  const [cartSubTotal, setCartSubTotal] = useState(0);
 
   useEffect(() => {
     const newCartCount = cartItems.reduce(
@@ -47,6 +48,11 @@ export const CartProvider = ({ children }) => {
       0,
     );
     setCartCount(newCartCount);
+  }, [cartItems]);
+
+  useEffect(() => {
+    const subTotal = cartItems.reduce((acc, val) => acc + val.quantity * val.price, 0);
+    setCartSubTotal(subTotal);
   }, [cartItems]);
 
   const addItemToCart = (product) => {
@@ -67,6 +73,7 @@ export const CartProvider = ({ children }) => {
     cartItems,
     addItemToCart,
     cartCount,
+    cartSubTotal,
     decrementQuantity,
     removeItem,
   };

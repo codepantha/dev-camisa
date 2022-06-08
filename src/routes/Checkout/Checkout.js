@@ -5,12 +5,7 @@ import { CartContext } from '../../contexts/cart.context';
 import './Checkout.styles.scss';
 
 const Checkout = () => {
-  const { cartItems } = useContext(CartContext);
-
-  const subTotal = () => cartItems.reduce(
-    (acc, currentVal) => acc + currentVal.quantity * currentVal.price,
-    0,
-  );
+  const { cartItems, cartSubTotal } = useContext(CartContext);
 
   return (
     <div className="checkout-container">
@@ -39,7 +34,7 @@ const Checkout = () => {
       )}
       <p>
         Sub-total: $
-        {subTotal()}
+        {cartSubTotal}
       </p>
     </div>
   );
