@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import CheckoutItem from '../../components/CheckoutItem/CheckoutItem';
 import { CartContext } from '../../contexts/cart.context';
 import './Checkout.styles.scss';
 
 const Checkout = () => {
-  const {
-    cartItems, addItemToCart, decrementQuantity, removeItem,
-  } = useContext(CartContext);
+  const { cartItems } = useContext(CartContext);
 
   const subTotal = () => cartItems.reduce(
     (acc, currentVal) => acc + currentVal.quantity * currentVal.price,
@@ -13,54 +13,29 @@ const Checkout = () => {
   );
 
   return (
-    <div>
+    <div className="checkout-container">
       {cartItems.length ? (
         <table>
-          <thead>
+          <thead className="checkout-header">
             <tr>
-              <th>Product</th>
-              <th>Description</th>
-              <th>Quantity</th>
-              <th>Price</th>
-              <th>Remove</th>
+              <th className="header-block">Product</th>
+              <th className="header-block">Description</th>
+              <th className="header-block">Quantity</th>
+              <th className="header-block">Price</th>
+              <th className="header-block">Remove</th>
             </tr>
           </thead>
           <tbody>
             {cartItems.map((cartItem) => (
-              <tr key={cartItem.id}>
-                <td><img src={cartItem.imageUrl} alt={cartItem.name} /></td>
-                <td>{cartItem.name}</td>
-                <td>
-                  <div className="quantity-div">
-                    <button
-                      type="button"
-                      className="less"
-                      onClick={() => decrementQuantity(cartItem)}
-                    >
-                      -
-                    </button>
-                    <span className="quantity">{cartItem.quantity}</span>
-                    <button
-                      type="button"
-                      className="plus"
-                      onClick={() => addItemToCart(cartItem)}
-                    >
-                      +
-                    </button>
-                  </div>
-                </td>
-                <td>{cartItem.price}</td>
-                <td>
-                  <button type="button" onClick={() => removeItem(cartItem)}>
-                    X
-                  </button>
-                </td>
-              </tr>
+              <CheckoutItem key={cartItem.id} cartItem={cartItem} />
             ))}
           </tbody>
         </table>
       ) : (
-        'no show'
+        <p>
+          Your shopping cart is currently empty.
+          <Link to="/shop" style={{ fontWeight: 'bold' }}> Add some items</Link>
+        </p>
       )}
       <p>
         Sub-total: $
