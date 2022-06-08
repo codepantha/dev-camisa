@@ -3,7 +3,9 @@ import { CartContext } from '../../contexts/cart.context';
 import './Checkout.styles.scss';
 
 const Checkout = () => {
-  const { cartItems, addItemToCart, decrementQuantity } = useContext(CartContext);
+  const {
+    cartItems, addItemToCart, decrementQuantity, removeItem,
+  } = useContext(CartContext);
   return (
     <div>
       <table>
@@ -30,7 +32,7 @@ const Checkout = () => {
                   </div>
                 </td>
                 <td>{cartItem.price}</td>
-                <td>X</td>
+                <td><button type="button" onClick={() => removeItem(cartItem)}>X</button></td>
               </tr>
             ))
             : 'no show'}
