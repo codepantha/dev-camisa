@@ -7,24 +7,26 @@ const addCartItem = (cartItems, product) => {
   );
 
   if (productExists) {
-    return cartItems.map((item) => (
-      item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item));
+    return cartItems.map((item) => (item.id === product.id
+      ? { ...item, quantity: item.quantity + 1 } : item));
   }
 
   return [...cartItems, { ...product, quantity: 1 }];
 };
 
 const reduceCartItemQuantity = (cartItems, product) => {
-  const newCartItems = cartItems.map((cartItem) => {
+  // remove any cartItem if the quantity is just 1
+  if (product.quantity === 1) {
+    return cartItems.filter((cartItem) => cartItem.id !== product.id);
+  }
+
+  return cartItems.map((cartItem) => {
     if (cartItem.name === product.name) {
       /* eslint-disable no-param-reassign */
       if (cartItem.quantity > 0) cartItem.quantity -= 1;
     }
     return cartItem;
   });
-
-  // remove any cartItem with quantity === 0
-  return newCartItems.filter((cartItem) => cartItem.quantity !== 0);
 };
 
 export const CartContext = createContext({
@@ -40,7 +42,10 @@ export const CartProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
-    const newCartCount = cartItems.reduce((acc, currentVal) => acc + currentVal.quantity, 0);
+    const newCartCount = cartItems.reduce(
+      (acc, currentVal) => acc + currentVal.quantity,
+      0,
+    );
     setCartCount(newCartCount);
   }, [cartItems]);
 
