@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
-import { createContext, useState } from 'react';
-import shopData from '../shop-data.json';
+import { createContext, useEffect, useState } from 'react';
+import { getCategoriesAndDocuments } from '../utils/firebase/firebase.utils';
+// import SHOP_DATA from '../shop-data';
 
 export const ProductsContext = createContext({
   products: [],
@@ -8,8 +9,17 @@ export const ProductsContext = createContext({
 });
 
 export const ProductsProvider = ({ children }) => {
-  const [products, setProducts] = useState(shopData);
+  const [products, setProducts] = useState([]);
   const value = { products, setProducts };
+
+  useEffect(() => {
+    const getCategoriesMap = async () => {
+      const categoryMap = await getCategoriesAndDocuments();
+      console.log(categoryMap);
+    };
+
+    getCategoriesMap();
+  }, []);
 
   return (
     <ProductsContext.Provider value={value}>
