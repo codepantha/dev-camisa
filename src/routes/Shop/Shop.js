@@ -1,17 +1,25 @@
 import { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import ProductCard from '../../components/ProductCard/ProductCard';
-import { ProductsContext } from '../../contexts/products.context';
+import { CategoriesContext } from '../../contexts/categories.context';
 import './Shop.styles.scss';
 
 const Shop = () => {
-  const { products } = useContext(ProductsContext);
+  const { categoriesMap } = useContext(CategoriesContext);
   return (
-    <div className="products-container">
-      {products.map((product) => (
-        <ProductCard key={uuidv4()} product={product} />
+    <>
+      {Object.keys(categoriesMap).map((title) => (
+        <>
+          <h2>{title}</h2>
+          <div key={uuidv4()} className="products-container">
+            {categoriesMap[title].map((product) => (
+              <ProductCard key={uuidv4()} product={product} />
+            ))}
+          </div>
+        </>
       ))}
-    </div>
+      ;
+    </>
   );
 };
 
