@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import './CategoryItem.styles.scss';
+import './DirectoryItem.styles.scss';
 
-const CategoryItem = ({ category: { title, imageUrl } }) => (
+const DirectoryItem = ({ category: { title, imageUrl } }) => (
   <div className="category-container">
     <div className="background-image" style={{ backgroundImage: `url(${imageUrl})` }} />
     <div className="category-body-container">
@@ -11,8 +11,8 @@ const CategoryItem = ({ category: { title, imageUrl } }) => (
   </div>
 );
 
-CategoryItem.propTypes = {
+DirectoryItem.propTypes = {
   category: PropTypes.instanceOf(Object).isRequired,
 };
 
-export default CategoryItem;
+export default DirectoryItem;
