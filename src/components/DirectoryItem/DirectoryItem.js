@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types';
-import './DirectoryItem.styles.scss';
+// import './DirectoryItem.styles.jsx';
+import { DirectoryItemContainer, Body, BackgroundImage } from './DirectoryItem.styles';
 
 const DirectoryItem = ({ category: { title, imageUrl } }) => (
-  <div className="category-container">
-    <div className="background-image" style={{ backgroundImage: `url(${imageUrl})` }} />
-    <div className="category-body-container">
+  <DirectoryItemContainer>
+    <BackgroundImage imageUrl={imageUrl} />
+    <Body>
       <h1>{title}</h1>
       <p>Shop Now</p>
-    </div>
-  </div>
+    </Body>
+  </DirectoryItemContainer>
 );
 
 DirectoryItem.propTypes = {
