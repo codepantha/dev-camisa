@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './FormInput.styles.scss';
+import { Group, Input, FormInputLabel } from './FormInput.styles';
 /* eslint-disable jsx-a11y/label-has-associated-control */
 const FormInput = ({
   label, type, name, required, value, handleChange,
 }) => (
-  <div className="group">
-    <input
+  <Group>
+    <Input
       className="form-input"
       type={type}
       name={name}
@@ -15,11 +15,11 @@ const FormInput = ({
       onChange={handleChange}
     />
     {label && (
-      <label className={`${value.length ? 'shrink' : ''} form-input-label`}>
+      <FormInputLabel shrink={value.length}>
         {label}
-      </label>
+      </FormInputLabel>
     )}
-  </div>
+  </Group>
 );
 
 FormInput.propTypes = {
