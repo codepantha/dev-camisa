@@ -1,6 +1,8 @@
 import { createContext, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
+import createAction from '../utils/reducer/reducer.utils.';
+
 const addCartItem = (cartItems, product) => {
   const productExists = cartItems.find(
     (cartItem) => cartItem.id === product.id,
@@ -76,10 +78,13 @@ export const CartProvider = ({ children }) => {
     const cartCount = cartItemCount(newCartItems);
     const cartSubTotal = cartItemsSubTotal(newCartItems);
 
-    dispatch({
-      type: CART_ACTION_TYPES.SET_CART_ITEMS,
-      payload: { cartItems: newCartItems, cartCount, cartSubTotal },
-    });
+    dispatch(
+      createAction(CART_ACTION_TYPES.SET_CART_ITEMS, {
+        cartItems: newCartItems,
+        cartCount,
+        cartSubTotal,
+      }),
+    );
   };
 
   const addItemToCart = (product) => {
@@ -97,7 +102,7 @@ export const CartProvider = ({ children }) => {
     updateCartItemsReducer(newCartItems);
   };
 
-  const setIsCartOpen = (bool) => dispatch({ type: CART_ACTION_TYPES.IS_CART_OPEN, payload: bool });
+  const setIsCartOpen = (bool) => dispatch(createAction(CART_ACTION_TYPES.IS_CART_OPEN, bool));
 
   const value = {
     isCartOpen,
