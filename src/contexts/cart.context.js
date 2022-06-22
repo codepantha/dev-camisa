@@ -31,12 +31,16 @@ const reduceCartItemQuantity = (cartItems, product) => {
   });
 };
 
+const removeItemFromCart = (cartItems, product) => (
+  cartItems.filter((cartItem) => cartItem.id !== product.id)
+);
+
 const cartItemCount = (cartItems) => cartItems.reduce(
   (acc, currentVal) => acc + currentVal.quantity,
   0,
 );
 
-const cartSubTotal = (cartItems) => cartItems.reduce(
+const cartItemsSubTotal = (cartItems) => cartItems.reduce(
   (acc, val) => acc + val.quantity * val.price,
   0,
 );
@@ -61,22 +65,17 @@ const cartReducer = (state, action) => {
   const { type, payload } = action;
   switch (type) {
     case CART_ACTION_TYPES.ADD_ITEM_TO_CART:
-      return { ...state, cartItems: addCartItem(state.cartItems, payload) };
+      return { ...state, cartItems: payload };
     case CART_ACTION_TYPES.DECREMENT_ITEM:
-      return { ...state, cartItems: reduceCartItemQuantity(state.cartItems, payload) };
+      return { ...state, cartItems: payload };
     case CART_ACTION_TYPES.REMOVE_ITEM:
-      return {
-        ...state,
-        cartItems: state.cartItems.filter(
-          (cartItem) => cartItem.id !== payload.id,
-        ),
-      };
+      return { ...state, cartItems: payload };
     case CART_ACTION_TYPES.IS_CART_OPEN:
-      return { ...state, isCartOpen: !state.isCartOpen };
+      return { ...state, isCartOpen: payload };
     case CART_ACTION_TYPES.CART_COUNT:
-      return { ...state, cartCount: cartItemCount(state.cartItems) };
+      return { ...state, cartCount: payload };
     case CART_ACTION_TYPES.CART_SUB_TOTAL:
-      return { ...state, cartSubTotal: cartSubTotal(state.cartItems) };
+      return { ...state, cartSubTotal: payload };
     default:
       return state;
   }
@@ -96,23 +95,23 @@ export const CartProvider = ({ children }) => {
   } = state;
 
   useEffect(() => {
-    dispatch({ type: CART_ACTION_TYPES.CART_COUNT });
-    dispatch({ type: CART_ACTION_TYPES.CART_SUB_TOTAL });
+    dispatch({ type: CART_ACTION_TYPES.CART_COUNT, payload: cartItemCount(cartItems) });
+    dispatch({ type: CART_ACTION_TYPES.CART_SUB_TOTAL, payload: cartItemsSubTotal(cartItems) });
   }, [cartItems]);
 
   const addItemToCart = (product) => {
-    dispatch({ type: CART_ACTION_TYPES.ADD_ITEM_TO_CART, payload: product });
+    dispatch({ type: CART_ACTION_TYPES.ADD_ITEM_TO_CART, payload: addCartItem(cartItems, product) });
   };
 
   const decrementQuantity = (product) => {
-    dispatch({ type: CART_ACTION_TYPES.DECREMENT_ITEM, payload: product });
+    dispatch({ type: CART_ACTION_TYPES.DECREMENT_ITEM, payload: reduceCartItemQuantity(cartItems, product) });
   };
 
   const removeItem = (product) => {
-    dispatch({ type: CART_ACTION_TYPES.REMOVE_ITEM, payload: product });
+    dispatch({ type: CART_ACTION_TYPES.REMOVE_ITEM, payload: removeItemFromCart(cartItems, product) });
   };
 
-  const setIsCartOpen = () => dispatch({ type: CART_ACTION_TYPES.IS_CART_OPEN });
+  const setIsCartOpen = () => dispatch({ type: CART_ACTION_TYPES.IS_CART_OPEN, payload: !isCartOpen });
 
   const value = {
     isCartOpen,
