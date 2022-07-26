@@ -1,10 +1,9 @@
-import { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { useSelector } from 'react-redux';
 import CategoryPreview from '../../components/CategoryPreview/CategoryPreview';
-import { CategoriesContext } from '../../contexts/categories.context';
 
 const CategoriesPreview = () => {
-  const { categoriesMap } = useContext(CategoriesContext);
+  const { categoriesMap } = useSelector((state) => state.categoryReducer);
   return (
     <div className="shop-container">
       {Object.keys(categoriesMap).map((title) => {
