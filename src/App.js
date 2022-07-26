@@ -7,9 +7,8 @@ import Navigation from './routes/Navigation/Navigation';
 import Shop from './routes/Shop/Shop';
 import Authentication from './routes/Authentication/Authentication';
 import Checkout from './routes/Checkout/Checkout';
-import { createUserDocumentFromAuth, getCategoriesAndDocuments, onAuthStateChangedListener } from './utils/firebase/firebase.utils';
+import { createUserDocumentFromAuth, onAuthStateChangedListener } from './utils/firebase/firebase.utils';
 import setCurrentUser from './store/user/userActions';
-import setCategoriesMap from './store/category/categoryActions';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -20,15 +19,6 @@ const App = () => {
       dispatch(setCurrentUser(user));
     });
     return unsubscribe;
-  }, []);
-
-  useEffect(() => {
-    const getCategoriesMap = async () => {
-      const categoryMap = await getCategoriesAndDocuments();
-      dispatch(setCategoriesMap(categoryMap));
-    };
-
-    getCategoriesMap();
   }, []);
 
   return (
