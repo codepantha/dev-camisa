@@ -10,7 +10,14 @@ import {
 } from 'firebase/auth';
 /* eslint-disable no-unused-vars */
 import {
-  getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs,
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+  query,
+  getDocs,
 } from 'firebase/firestore';
 
 // dev-camisa-web-app's Firebase configuration
@@ -34,7 +41,10 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider)
 
 export const db = getFirestore();
 
-export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd,
+) => {
   const collectionRef = collection(db, collectionKey);
   const batch = writeBatch(db);
 
@@ -51,13 +61,8 @@ export const getCategoriesAndDocuments = async () => {
   const q = query(collectionRef);
 
   const querySnapShot = await getDocs(q);
-  const categoryMap = querySnapShot.docs.reduce((acc, document) => {
-    const { title, items } = document.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
 
-  return categoryMap;
+  return querySnapShot.docs.map((document) => document.data());
 };
 
 export const createUserDocumentFromAuth = async (userAuth) => {

@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 import CategoryPreview from '../../components/CategoryPreview/CategoryPreview';
-import selectCategoriesMap from '../../store/category/categorySelector';
+import selectCategories from '../../store/category/categorySelector';
 
 const CategoriesPreview = () => {
-  const categoriesMap = useSelector(selectCategoriesMap);
+  const categoriesMap = useSelector(selectCategories);
   return (
     <div className="shop-container">
       {Object.keys(categoriesMap).map((title) => {
