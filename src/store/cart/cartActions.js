@@ -30,37 +30,20 @@ const reduceCartItemQuantity = (cartItems, product) => {
   });
 };
 
-const cartItemCount = (cartItems) => cartItems.reduce((acc, currentVal) => acc + currentVal.quantity, 0);
-const cartItemsSubTotal = (cartItems) => cartItems.reduce((acc, val) => acc + val.quantity * val.price, 0);
-
-const updateCartItemsReducer = (newCartItems) => {
-  const cartCount = cartItemCount(newCartItems);
-  const cartSubTotal = cartItemsSubTotal(newCartItems);
-
-  createAction(CART_ACTION_TYPES.SET_CART_ITEMS, {
-    cartItems: newCartItems,
-    cartCount,
-    cartSubTotal,
-  });
-};
-
 const removeItemFromCart = (cartItems, product) => cartItems.filter((cartItem) => cartItem.id !== product.id);
 
 export const decrementQuantity = (cartItems, product) => {
   const newCartItems = reduceCartItemQuantity(cartItems, product);
-  // updateCartItemsReducer(newCartItems);
-  createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
+  return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
 };
 
 export const removeItem = (cartItems, product) => {
   const newCartItems = removeItemFromCart(cartItems, product);
-  // updateCartItemsReducer(newCartItems);
-  createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
+  return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
 };
 
 export const addItemToCart = (cartItems, product) => {
   const newCartItems = addCartItem(cartItems, product);
-  // updateCartItemsReducer(newCartItems);
   return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
 };
 
