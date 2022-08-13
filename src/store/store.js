@@ -1,6 +1,7 @@
 import { compose, createStore, applyMiddleware } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import thunk from 'redux-thunk';
 
 import logger from 'redux-logger';
 
@@ -15,9 +16,10 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // Don't log middleware when in production
-const middlewares = [process.env.NODE_ENV !== 'production' && logger].filter(
-  Boolean,
-);
+const middlewares = [
+  process.env.NODE_ENV !== 'production' && logger,
+  thunk,
+].filter(Boolean);
 
 // if we're not in production, and window object exists,
 // then use the redux_devtools extension
