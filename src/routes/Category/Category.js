@@ -5,21 +5,27 @@ import { useSelector } from 'react-redux';
 
 import ProductCard from '../../components/ProductCard/ProductCard';
 import ProductsContainer from '../Shop/Shop.styles';
-import selectCategoriesMap from '../../store/category/categorySelector';
+import { selectCategoriesMap, selectCategoriesIsLoading } from '../../store/category/categorySelector';
+import Spinner from '../../components/spinner/Spinner';
 
 const Category = () => {
   const { category } = useParams();
   // destructure and get the products
   const { [category]: products } = useSelector(selectCategoriesMap);
+  const isPending = useSelector(selectCategoriesIsLoading);
 
   return (
     <>
       <h2 style={{ textAlign: 'center' }}>{category.toUpperCase()}</h2>
-      <ProductsContainer>
-        {products?.map((product) => (
-          <ProductCard key={uuidv4()} product={product} />
-        ))}
-      </ProductsContainer>
+      {isPending ? (
+        <Spinner />
+      ) : (
+        <ProductsContainer>
+          {products?.map((product) => (
+            <ProductCard key={uuidv4()} product={product} />
+          ))}
+        </ProductsContainer>
+      )}
     </>
   );
 };
