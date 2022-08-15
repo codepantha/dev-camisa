@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import {
-  authenticateUserWithEmailAndPassword,
-  signInWithGooglePopup,
-} from '../../utils/firebase/firebase.utils';
+import { useDispatch } from 'react-redux';
+
+import { emailSignInStart, googleSignInStart } from '../../store/user/userActions';
 import Button from '../Button/Button';
 import FormInput from '../FormInput/FormInput';
 import './SignInForm.styles.scss';
 
 const SignInForm = () => {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const signInWithGoogle = async () => {
-    await signInWithGooglePopup();
+  const signInWithGoogle = () => {
+    dispatch(googleSignInStart());
   };
 
   const handleChange = (e) => {
@@ -29,7 +30,7 @@ const SignInForm = () => {
     e.preventDefault();
 
     try {
-      await authenticateUserWithEmailAndPassword(email, password);
+      dispatch(emailSignInStart(email, password));
       resetFormFields();
     } catch (error) {
       switch (error.code) {
@@ -48,11 +49,29 @@ const SignInForm = () => {
   return (
     <div className="sign-up-container">
       <form onSubmit={handleSubmit}>
-        <FormInput label="email" type="email" name="email" required value={email} handleChange={handleChange} />
-        <FormInput label="password" type="password" name="password" required value={password} handleChange={handleChange} />
+        <FormInput
+          label="email"
+          type="email"
+          name="email"
+          required
+          value={email}
+          handleChange={handleChange}
+        />
+        <FormInput
+          label="password"
+          type="password"
+          name="password"
+          required
+          value={password}
+          handleChange={handleChange}
+        />
         <div className="buttons-container">
           <Button type="submit">Sign In</Button>
-          <Button type="button" buttonType="google" handleButtonClick={signInWithGoogle}>
+          <Button
+            type="button"
+            buttonType="google"
+            handleButtonClick={signInWithGoogle}
+          >
             Google sign in
           </Button>
         </div>
