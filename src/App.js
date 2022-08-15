@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -7,18 +8,13 @@ import Navigation from './routes/Navigation/Navigation';
 import Shop from './routes/Shop/Shop';
 import Authentication from './routes/Authentication/Authentication';
 import Checkout from './routes/Checkout/Checkout';
-import { createUserDocumentFromAuth, onAuthStateChangedListener } from './utils/firebase/firebase.utils';
-import setCurrentUser from './store/user/userActions';
+import { checkUserSession } from './store/user/userActions';
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user) => {
-      if (user) createUserDocumentFromAuth(user);
-      dispatch(setCurrentUser(user));
-    });
-    return unsubscribe;
+    dispatch(checkUserSession());
   }, []);
 
   return (
