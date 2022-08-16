@@ -1,20 +1,22 @@
 import { Link, Outlet } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CartIcon from '../../components/CartIcon/CartIcon';
 import CartDropdown from '../../components/CartDropdown/CartDropdown';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import NavigationComponent, { LogoContainer, NavLinks, NavLink } from './Navigation.styles';
-import { signOutUser } from '../../utils/firebase/firebase.utils';
 import selectCurrentUser from '../../store/user/userSelector';
 import { selectIsCartOpen } from '../../store/cart/cartSelector';
+import { signOutStart } from '../../store/user/userActions';
 
 const Navigation = () => {
+  const dispatch = useDispatch();
+
   const currentUser = useSelector(selectCurrentUser);
   const isCartOpen = useSelector(selectIsCartOpen);
 
   const handleSignOut = async () => {
-    await signOutUser();
+    dispatch(signOutStart());
   };
 
   return (
